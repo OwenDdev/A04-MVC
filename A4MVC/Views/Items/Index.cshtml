@@ -1,0 +1,28 @@
+﻿@using Assignment4MVC.Models
+@model IEnumerable<CatalogItem>
+
+@{
+    ViewData["Title"] = "Residence Items";
+}
+
+<h1>Insurance Catalog</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Type</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Assignment4MVC.Models.CatalogItem item in Model)
+        {
+            <tr>
+                <td>@item.ItemName</td>
+                <td>@item.ItemType</td>
+                <td>@item.GetFormattedValue()</td>
+            </tr>
+        }
+    </tbody>
+</table>
