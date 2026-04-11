@@ -10,12 +10,15 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System;
 using Assignment4MVC.Models;
+using Microsoft.AspNetCore.Authorization;
+
 namespace Assignment4MVC.Controllers
 {
     /*
      * Class: ItemsController
      * Description: Manages the flow between the ResidenceItem model and the Views.
      */
+    [Authorize]
     public class ItemsController : Controller
     {
         //declaration for configuration settings
@@ -30,6 +33,9 @@ namespace Assignment4MVC.Controllers
          */
         public IActionResult Index()
         {
+
+            string catalogId = User.FindFirst("CatalogId")?.Value ?? "";
+        
             string? connectionString = _configuration.GetConnectionString("DefaultConnection");
             if (connectionString == null)
             {
@@ -40,10 +46,11 @@ namespace Assignment4MVC.Controllers
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "Select itemid, catalogid, itemname, itemtype, itemvalue From CatalogItem";
+                string sqlQuery = "SELECT itemid, catalogid, itemname, itemtype, itemvalue FROM CatalogItem WHERE catalogid = @CatalogId";
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
+                    command.Parameters.AddWithValue("@CatalogId", catalogId);
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
