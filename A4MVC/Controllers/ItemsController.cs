@@ -1,8 +1,10 @@
 ﻿/*
- * File: ItemsController.cs
- * Purpose: Controller to handle requests for the residence item catalog.
- * Author: [Your Group Names]
- * Date: 2026-04-07
+ * FILE: ItemsController.cs
+ * PROJECT: A4-MVC
+ * PROGRAMMER: Chien che-ping, Precious Orewen, Tsai yi-chen, najaf ali
+ * FIRST VERSIO: 2026-04-07
+ * DESCRIPTION: 
+ * Controller class repersnt the backend code, prosseccer
  */
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -10,15 +12,12 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System;
 using Assignment4MVC.Models;
-using Microsoft.AspNetCore.Authorization;
-
 namespace Assignment4MVC.Controllers
 {
     /*
      * Class: ItemsController
      * Description: Manages the flow between the ResidenceItem model and the Views.
      */
-    [Authorize]
     public class ItemsController : Controller
     {
         //declaration for configuration settings
@@ -33,9 +32,6 @@ namespace Assignment4MVC.Controllers
          */
         public IActionResult Index()
         {
-
-            string catalogId = User.FindFirst("CatalogId")?.Value ?? "";
-        
             string? connectionString = _configuration.GetConnectionString("DefaultConnection");
             if (connectionString == null)
             {
@@ -46,11 +42,10 @@ namespace Assignment4MVC.Controllers
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "SELECT itemid, catalogid, itemname, itemtype, itemvalue FROM CatalogItem WHERE catalogid = @CatalogId";
+                string sqlQuery = "Select itemid, catalogid, itemname, itemtype, itemvalue From CatalogItem";
 
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@CatalogId", catalogId);
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -58,6 +53,7 @@ namespace Assignment4MVC.Controllers
                         {
                             //Map the SQL row to C# model
                             CatalogItem item = new CatalogItem();
+
                             item.ItemId = reader["itemid"].ToString() ?? "";
                             item.CatalogId = reader["catalogid"].ToString() ?? "";
                             item.ItemName = reader["itemname"].ToString() ?? "";

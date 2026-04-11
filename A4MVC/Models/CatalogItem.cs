@@ -1,8 +1,10 @@
 ﻿/*
- * File: ResidenceItem.cs
- * Purpose: Model class representing a household item for insurance cataloging.
- * Author: [Your Group Names]
- * Date: 2026-04-07
+ * FILE: ResidenceItem.cs
+ * PROJECT: A4-MVC
+ * PROGRAMMER: Chien che-ping, Precious Orewen, Tsai yi-chen, najaf ali
+ * FIRST VERSIO: 2026-04-07
+ * DESCRIPTION: 
+ * Model class representing a household item for insurance cataloging.
  */
 
 namespace Assignment4MVC.Models

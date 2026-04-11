@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-
 namespace Assignment4MVC
 {
     public class Program
@@ -11,21 +9,8 @@ namespace Assignment4MVC
             //Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
-            {
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
-                options.Cookie.Name = "ResidentAuthCookie";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                options.SlidingExpiration = true;
-            });
-
             var app = builder.Build();
 
-            // For debugging
-            // app.UseDeveloperExceptionPage();
-            
             //Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -33,14 +18,11 @@ namespace Assignment4MVC
                 //The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthentication();
 
             app.UseAuthorization();
 

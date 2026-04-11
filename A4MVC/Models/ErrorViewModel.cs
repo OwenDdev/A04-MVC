@@ -1,4 +1,4 @@
-namespace TestMVC.Models
+namespace Assignment4MVC.Models
 {
     public class ErrorViewModel
     {

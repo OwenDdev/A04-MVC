@@ -1,0 +1,11 @@
+# Visual Studio hidden folder
+.vs/
+
+# Build folders (Compiled code that shouldn't be shared)
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.user
